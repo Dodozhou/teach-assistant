@@ -1,0 +1,49 @@
+CREATE DATABASE IF NOT EXISTS teach_assistant_db;
+USE teach_assistant_db;
+
+DROP TABLE IF EXISTS t_question;
+CREATE TABLE t_question (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '唯一自增ID',
+  title VARCHAR(512) NOT NULL COMMENT '题干',
+  options VARCHAR(1024) NOT NULL COMMENT '选项集合，分号分隔',
+  answer VARCHAR(128) NOT NULL COMMENT '答案',
+  creator VARCHAR(64) NOT NULL COMMENT '创建者账号',
+  create_time DATETIME NOT NULL COMMENT '创建时间'
+)DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS t_material;
+CREATE TABLE t_material (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '唯一自增ID',
+  title VARCHAR(128) NOT NULL COMMENT '资料标题',
+  link VARCHAR(1024) NOT NULL COMMENT '资料的链接',
+  description VARCHAR(512) DEFAULT NULL COMMENT '资料描述',
+  uploader VARCHAR(64) NOT NULL COMMENT '上传者账号',
+  up_time DATETIME NOT NULL COMMENT '上传时间'
+)DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS t_exam_record;
+CREATE TABLE t_exam_record (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '唯一自增ID',
+  examinee VARCHAR(64) NOT NULL COMMENT '考试者',
+  questions_list VARCHAR(256) NOT NULL COMMENT '试题编号集合，分号分隔',
+  answers_list VARCHAR(128) DEFAULT NULL COMMENT '试题答案集合，分号分隔',
+  score INT DEFAULT 0 COMMENT '考试成绩',
+  begin_time DATETIME NOT NULL COMMENT '考试开始时间',
+  end_time DATETIME DEFAULT NULL COMMENT '考试结束时间'
+)DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS t_learn_record;
+CREATE TABLE t_learn_record (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '唯一自增ID',
+  material_id VARCHAR(128) NOT NULL COMMENT '资料ID',
+  learner VARCHAR(64) NOT NULL COMMENT '学习者ID',
+  learn_time DATETIME NOT NULL COMMENT '最新学习时间'
+)DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS t_comments;
+CREATE TABLE t_comments (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '唯一自增ID',
+  commenter VARCHAR(64) NOT NULL COMMENT '留言者ID',
+  contents VARCHAR(1024) NOT NULL COMMENT '留言内容',
+  comment_time DATETIME NOT NULL COMMENT '留言时间'
+)DEFAULT CHARSET=utf8;
